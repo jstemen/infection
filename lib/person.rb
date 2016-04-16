@@ -1,5 +1,5 @@
 class Person
-  attr_accessor :version, :name
+  attr_accessor :version, :name, :exploration
 
   def to_s
     @name
