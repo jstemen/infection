@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe Runner do
+describe TotalInfection do
 
   it 'should infect the network' do
     test_version = 2.0
@@ -12,7 +12,7 @@ describe Runner do
     coach.add_student(student_b)
 
 
-    Runner.new.infect(student_a)
+    TotalInfection.new.infect(student_a)
     expect(coach.version).to eq(test_version)
     expect(student_b.version).to eq(test_version)
 

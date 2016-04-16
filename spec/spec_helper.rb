@@ -1,4 +1,4 @@
 require 'rspec'
 
-require_relative '../lib/runner'
+require_relative '../lib/infection'
 

@@ -1,11 +1,5 @@
-require_relative '../lib/person'
 
-
-class Runner
-
-  def initialize(all_people=nil)
-    @all_people = all_people
-  end
+class TotalInfection
 
   def infect(patient_zero)
     to_explore = []
