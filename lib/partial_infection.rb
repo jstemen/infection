@@ -7,7 +7,7 @@ class PartialInfection
     @max_depth = max_depth
   end
 
-  #returns the infected
+  # returns Array of the infected with new version
   def infect(min_to_infect, max_to_infect)
     fail ArgumentError.new("Enough people in system") if @all_people.size < min_to_infect
     Exploration.remove_all
@@ -24,6 +24,7 @@ class PartialInfection
 
       until to_explore.empty? || depth > @max_depth
         person = to_explore.pop
+        next unless person
         puts "Visiting: '#{person.to_s}'"
 
         existing_exp = person.exploration
@@ -58,16 +59,15 @@ class PartialInfection
 
     end
 
-   exps = Exploration.all.sort
+    # largest to smallest
+    exps = Exploration.all.sort.reverse!
     accu = []
-    exps.each{|exploration|
-     if exploration.people.size <= (max_to_infect - accu.size)
-       accu += exploration.people
-     else
-       foo = nil
-     end
-
+    exps.each { |exploration|
+      if exploration.people.size <= (max_to_infect - accu.size)
+        accu += exploration.people
+      end
     }
+    accu.each { |p| p.version = @new_version }
     accu
   end
 end

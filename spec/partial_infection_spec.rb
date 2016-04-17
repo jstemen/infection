@@ -47,12 +47,32 @@ describe PartialInfection do
     expect {partial_infection.infect(10, 10)}.to raise_error(ArgumentError)
   end
 
-  it 'can merge exploration groups that belong to the same graph'
+  it 'can merge exploration groups that belong to the same graph' do
+    partial_infection = PartialInfection.new( t_graph, 2.0, t_graph.size, 1)
+    infected = partial_infection.infect(t_graph.size, t_graph.size)
+    expect(infected.size).to eq(t_graph.size)
+    expect(infected).to include(*t_graph)
+  end
   it 'it infects number of people with in range if possible' do
     partial_infection = PartialInfection.new(i_graph + tri_graph + t_graph, 2.0, 10, 3)
     infected = partial_infection.infect(2, 2)
     expect(infected).to include(*i_graph)
     expect(infected.size).to eq(2)
+  end
+
+  it 'changes the infected people to the target version' do
+    target_version = 2.0
+    partial_infection = PartialInfection.new(i_graph , target_version, 1, 2)
+    infected = partial_infection.infect(2, 2)
+    infected.each{|i| expect(i.version).to eq(target_version)}
+  end
+
+  it 'wroks wiht tset case' do
+    target_version = 2.0
+    partial_infection = PartialInfection.new( tri_graph + i_graph , target_version, 10, 10)
+    infected = partial_infection.infect(0, 4)
+    expect(infected.size).to eq(4)
+    expect(infected).to include(*tri_graph)
   end
 
   #
