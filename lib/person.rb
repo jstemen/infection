@@ -1,8 +1,16 @@
 class Person
   attr_accessor :version, :name, :exploration
 
+  def ==(other)
+    @name == other.name
+  end
+
   def to_s
     @name
+  end
+
+  def inspect
+    to_s
   end
 
   def initialize(name=nil)

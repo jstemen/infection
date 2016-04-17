@@ -7,9 +7,13 @@ class PartialInfection
     @max_depth = max_depth
   end
 
+
+  class CanNotFindEnoughPeople < StandardError; end
+
   # returns Array of the infected with new version
+  # @param [FixNum] min_to_infect Minimum number of people that should get the new version
+  # @param [FixNum] max_to_infect Maximum number of people that should get the new version
   def infect(min_to_infect, max_to_infect)
-    fail ArgumentError.new("Not enough people in system") if @all_people.size < min_to_infect
     Exploration.remove_all
     people = @all_people.dup
     (1..@max_seeds).each do |exploration_count|
@@ -25,6 +29,7 @@ class PartialInfection
       depth = 0
       until to_explore.empty? || depth > @max_depth
         person = to_explore.pop
+        #ToDo replace puts with proper logger
         puts "Visiting: '#{person.to_s}'"
 
         existing_exp = person.exploration
@@ -68,6 +73,9 @@ class PartialInfection
         accu += exploration.people
       end
     end
+
+    fail(CanNotFindEnoughPeople) if accu.size < min_to_infect
+
     accu.each { |p| p.version = @new_version }
     accu
   end
