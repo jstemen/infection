@@ -36,7 +36,7 @@ describe PartialInfection do
   end
   it 'returns an array of people' do
     partial_infection = PartialInfection.new(i_graph, 2.0, 2, 2)
-    infected = partial_infection.infect(0, 1)
+    infected = partial_infection.infect(2, 2)
     expect(infected).to be_kind_of(Array)
     expect(infected.first).to be_kind_of(Person)
   end
@@ -52,6 +52,7 @@ describe PartialInfection do
     partial_infection = PartialInfection.new(i_graph + tri_graph + t_graph, 2.0, 10, 3)
     infected = partial_infection.infect(2, 2)
     expect(infected).to include(*i_graph)
+    expect(infected.size).to eq(2)
   end
 
   #
