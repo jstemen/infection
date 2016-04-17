@@ -59,6 +59,7 @@ class PartialInfection
 
     end
 
+    # Greedy heuristic for attempting to reach max size
     # largest to smallest
     exps = Exploration.all.sort.reverse!
     accu = []

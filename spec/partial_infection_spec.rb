@@ -25,11 +25,13 @@ describe PartialInfection do
     h = Person.new('h')
     i = Person.new('i')
     j = Person.new('j')
+    k = Person.new('k')
 
     h.add_student(g)
     h.add_student(j)
     h.add_student(i)
-    [g, h, i, j]
+    k.add_student(h)
+    [g, h, i, j, k]
   }
   describe '#infect' do
 
@@ -67,12 +69,19 @@ describe PartialInfection do
     infected.each{|i| expect(i.version).to eq(target_version)}
   end
 
-  it 'wroks wiht tset case' do
-    target_version = 2.0
-    partial_infection = PartialInfection.new( tri_graph + i_graph , target_version, 10, 10)
-    infected = partial_infection.infect(0, 4)
-    expect(infected.size).to eq(4)
-    expect(infected).to include(*tri_graph)
+  context 'when processing all three example graphs' do
+=begin
+    (tri_graph + i_graph + t_graph).combinations.each do |people|
+
+
+    end
+=end
+    it 'returns tri_grap when asking for 4 people' do
+      partial_infection = PartialInfection.new( tri_graph + i_graph + t_graph , 2.0, 10, 10)
+      infected = partial_infection.infect(5, 5)
+      expect(infected.size).to eq(tri_graph.size)
+      expect(infected).to include(*tri_graph)
+    end
   end
 
   #
