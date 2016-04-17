@@ -1,10 +1,10 @@
 
+# Infects all people connected to the input person
 class TotalInfection
 
   def infect(patient_zero)
     to_explore = []
     to_explore << patient_zero
-
 
     test_version = patient_zero.version
     until to_explore.empty?
@@ -24,7 +24,6 @@ class TotalInfection
     end
 
     puts "infect list size is: #{to_explore.size}"
-
 
   end
 end

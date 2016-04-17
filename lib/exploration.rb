@@ -1,3 +1,4 @@
+# Represents the people found during a exploration of a person graph
 class Exploration
 
   class << self

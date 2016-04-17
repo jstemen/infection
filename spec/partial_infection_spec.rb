@@ -74,6 +74,7 @@ describe PartialInfection do
     infected.each { |i| expect(i.version).to eq(target_version) }
   end
 
+  #Provides a bit of repeatable stress-testing to try to find problems I didn't think of
   context 'when processing all three example graphs' do
     PERMUTATION_COUNT = 100
     (tri_graph + i_graph + t_graph).permutation.take(PERMUTATION_COUNT).each do |people|

@@ -20,11 +20,15 @@ class Person
     @coaches_arry = []
   end
 
+  # My algorithms treat edges a bidirectional. I added a distinction between
+  # students and coaches to more accurately reflect the data model you guys/gals
+  # probably use in the real world
   def associates
     students + coaches
   end
 
   def students
+    #freeze to ensure that outside world must use add_* methods
     @students_arry.dup.freeze
   end
 

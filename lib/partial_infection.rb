@@ -1,6 +1,9 @@
 class PartialInfection
 
-  def initialize(all_people, new_version, max_seeds=100, max_depth=100)
+  # @param [FixNum] max_seeds - Maximum number of explorations to be conducted into the graphs of people
+  # @param [FixNum] max_depth - Maxium depth into a graph per exploration
+  # @param [Enumerator of People] all_people - All people in the system
+  def initialize(all_people, new_version, max_seeds=100, max_depth=100)k
     @all_people = all_people
     @new_version = new_version
     @max_seeds = max_seeds
@@ -10,9 +13,12 @@ class PartialInfection
 
   class CanNotFindEnoughPeople < StandardError; end
 
-  # returns Array of the infected with new version
+  # Gives approximate solution to the partial infection problem.
+  # Entire people graphs are not guaranteed to be infected as explorations
+  # are not exhaustive.
   # @param [FixNum] min_to_infect Minimum number of people that should get the new version
   # @param [FixNum] max_to_infect Maximum number of people that should get the new version
+  # @return [Array] People infected with new version of site
   def infect(min_to_infect, max_to_infect)
     Exploration.remove_all
     people = @all_people.dup
