@@ -3,7 +3,7 @@ class PartialInfection
   # @param [FixNum] max_seeds - Maximum number of explorations to be conducted into the graphs of people
   # @param [FixNum] max_depth - Maxium depth into a graph per exploration
   # @param [Enumerator of People] all_people - All people in the system
-  def initialize(all_people, new_version, max_seeds=100, max_depth=100)k
+  def initialize(all_people, new_version, max_seeds=100, max_depth=100)
     @all_people = all_people
     @new_version = new_version
     @max_seeds = max_seeds
