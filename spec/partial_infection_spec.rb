@@ -53,7 +53,7 @@ describe PartialInfection do
     expect(infected.size).to eq(t_graph.size)
     expect(infected).to include(*t_graph)
   end
-  it 'it infects number of people with in range if possible' do
+  it 'infects number of people with in range if possible' do
     partial_infection = PartialInfection.new(i_graph + tri_graph + t_graph, 2.0, 10, 3)
     infected = partial_infection.infect(2, 2)
     expect(infected).to include(*i_graph)

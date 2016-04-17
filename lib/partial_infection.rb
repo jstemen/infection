@@ -9,40 +9,39 @@ class PartialInfection
 
   # returns Array of the infected with new version
   def infect(min_to_infect, max_to_infect)
-    fail ArgumentError.new("Enough people in system") if @all_people.size < min_to_infect
+    fail ArgumentError.new("Not enough people in system") if @all_people.size < min_to_infect
     Exploration.remove_all
     people = @all_people.dup
     (1..@max_seeds).each do |exploration_count|
       patient_zero = people.pop
 
-      to_explore = []
-      to_explore << patient_zero
+      #breakout if we ran out of people
+      break unless patient_zero
 
-      depth = 0
+      to_explore = [patient_zero]
 
       exploration = Exploration.new
 
+      depth = 0
       until to_explore.empty? || depth > @max_depth
         person = to_explore.pop
-        next unless person
         puts "Visiting: '#{person.to_s}'"
 
         existing_exp = person.exploration
-        if (existing_exp) == nil
+        if existing_exp.nil?
           #not part of any other exploration
           exploration.add_person(person)
         else
-          if existing_exp == exploration_count
-            #already meregd it, skip it
+          if existing_exp == exploration
+            raise "already merged it,  This shouldn't happen"
           else
-            #need to merge explorations to one
+            #need to merge old exploration to new one
             existing_exp.people.each do |person_to_mo|
               exploration.add_person(person_to_mo)
             end
             Exploration.remove(existing_exp)
           end
         end
-
 
         person.associates.each do |associate|
           if exploration.people.include?(associate)
@@ -53,6 +52,7 @@ class PartialInfection
           end
         end
 
+        depth +=1
       end
 
       puts "infect list size is: #{to_explore.size}"
@@ -62,11 +62,11 @@ class PartialInfection
     # largest to smallest
     exps = Exploration.all.sort.reverse!
     accu = []
-    exps.each { |exploration|
+    exps.each do |exploration|
       if exploration.people.size <= (max_to_infect - accu.size)
         accu += exploration.people
       end
-    }
+    end
     accu.each { |p| p.version = @new_version }
     accu
   end
